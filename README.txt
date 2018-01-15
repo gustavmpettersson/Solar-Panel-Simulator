@@ -8,8 +8,16 @@ Sven Grahn
 Christer Fuglesang
 <https://github.com/gustavmpettersson/Solar-Panel-Simulator/>
 
-This work is Open Source Software and Hardware. The software is released under the GNU General Public License, and the
-hardware under the CERN Open Hardware Licence. See the included <LICENCE.txt> files for details.
+This project is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. This should be considered EXPERIMENTAL RESEARCH
+technology and appropriate care should be taken. We will NOT be responsible for ANY related DAMAGES or ISSUES.
+
+This work is Open Source Software and Hardware. See the two included <LICENSE.txt> files for details.
+The software is Copyright 2018 Gustav Pettersson, and released under the GNU General Public License.
+The hardware is Copyright 2018 Gustav Pettersson and Malte Gruber, and released under the CERN Open Hardware Licence.
+
+This system was designed by people working on the MIST and SEAM projects at the KTH Royal Institute of Technology.
 
 We invite discussion, collaboration and help with implementing the system.
 Please contact us at <gupet@kth.se> or <gustavpettersson@live.com>.

@@ -42,7 +42,7 @@ classdef Realtime_SPS_GUI < handle
     end
     
     methods
-        function obj = Realtime_SPS_GUI(SPSs,simulationData,simDevices)
+        function obj = Realtime_SPS_GUI(SPSs,simulationData)
             obj.SPSs = SPSs;
             obj.figure = figure('Position',[360,500,1000,500],'MenuBar','none','ToolBar','none',...
                 'Name','Realtime SPS Simulation','CloseRequestFcn',@obj.windowCloseCallback);
