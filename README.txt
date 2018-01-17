@@ -27,3 +27,10 @@ Institute of Technology.
 
 We invite discussion, collaboration and help with implementing the system. Please contact 
 us at <gupet@kth.se> or <gustavpettersson@live.com>.
+
+
+
+HERE TO USE THE SPS? START BY READING <Introduction to the SPS>.
+
+HERE TO BUILD THE SPS? HEAD INTO THE HARDWARE FOLDER FOR NECCESSARY FILES. THEN GO TO THE
+<Building and Calibrating> FOLDER AND READ <Building Testing and Calibrating the SPS>.
