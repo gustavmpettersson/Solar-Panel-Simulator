@@ -156,15 +156,9 @@ void loop() {
       arrayValid = true;
       //Wait for the buffer to fill with the data
       unsigned long startTime = millis();
-      while(Serial2.available() < 8192) {
-        if ( (millis() - startTime)>5000 ) {
-          arrayValid = false;
-          break;
-        }
-      }
-      if (arrayValid) {
-        for (int i=0; i<4096; i++) {
-          //Clear variable
+      int i = 0;
+      while ( (millis()-startTime)<5000 && i<4096 ) {     
+        if (Serial2.available()>1) { //If there are at least two bytes in buffer, read in
           newValue = 0;
           byteValid = true;
           //Read MSBs and insert
@@ -179,13 +173,21 @@ void loop() {
           } else {byteValid = false;}
           if (byteValid) {
             *(inactiveLookup + i) = msb<<6 | lsb; //Put new value in inactive array
+            i = i+1; //Increment pointer
           } else {
-            Serial2.println("Read Error");
+            Serial2.println("Read Error, value not valid!");
             arrayValid = false;
             break;
           }
         }
       }
+      
+      if ((i==4096) && !Serial2.available()){ //If we read all values and the buffer is now empty
+        arrayValid = true;
+      } else {
+        Serial2.println("Read Error, array not valid!"); //Something failed
+      }
+
       //Switch the active/inactive pointers if all went as planned
       if (arrayValid) {
         noInterrupts();
