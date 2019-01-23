@@ -46,7 +46,7 @@ load('simulationData_MIST_sample.mat');
 SPSs = LoadAllSPS(SPS_HW_IDS,SPS_TYPES,SPS_LABELS);
 
 % Load the GUI to run the simulation
-Realtime_SPS_GUI(SPSs,simulationData,SPS_LABELS);
+Realtime_SPS_GUI(SPSs,simulationData);
 
 
 
