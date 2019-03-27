@@ -31,6 +31,7 @@ classdef Realtime_SPS_GUI < handle
         timestepsMin
         
         currentIndex
+        restartAtEnd = false
         running = false; %Flag weather to run
         startSimTime
         startRealTime
@@ -42,7 +43,11 @@ classdef Realtime_SPS_GUI < handle
     end
     
     methods
-        function obj = Realtime_SPS_GUI(SPSs,simulationData)
+        function obj = Realtime_SPS_GUI(SPSs,simulationData,restartAtEnd)
+            if nargin > 2
+                obj.restartAtEnd = restartAtEnd;
+            end    
+        
             obj.SPSs = SPSs;
             obj.figure = figure('Position',[360,500,1000,500],'MenuBar','none','ToolBar','none',...
                 'Name','Realtime SPS Simulation','CloseRequestFcn',@obj.windowCloseCallback);
@@ -98,16 +103,14 @@ classdef Realtime_SPS_GUI < handle
         %% Update the SPSs. Waits until real time is reached. Calls back on itself!
         % Set flag obj.running == false to stop the updating.
         function stepTime(obj,~,~)
-            if obj.running
+            if obj.running          
                 obj.timeslider.Value = obj.timestepsMin(obj.currentIndex);
                 obj.statustext.String = ['Time: ' num2str(obj.timestepsMin(obj.currentIndex),'%.1f')...
                     ' minutes                  Index: ' num2str(obj.currentIndex)...
                     '/' num2str(length(obj.timestepsMin))];
                 drawnow
-                
-                if obj.currentIndex == length(obj.timestepsMin) %Reached end
-                    obj.disableCallback()
-                else            
+
+                if obj.currentIndex <= length(obj.timestepsMin) %Valid index check
                     for i = 1:length(obj.SPSs)
                         if obj.running
                             obj.SPSs(i).setIVcurve(obj.IVCurves(:,i*2-1,obj.currentIndex),obj.IVCurves(:,i*2,obj.currentIndex));
@@ -117,7 +120,19 @@ classdef Realtime_SPS_GUI < handle
                             drawnow
                         end
                     end
-
+                    
+                    % Check if we reached the end! stop or restart?
+                    if obj.currentIndex >= length(obj.timestepsMin) 
+                      if obj.restartAtEnd
+                          obj.currentIndex = 0;
+                          obj.startRealTime = datenum(datetime)*1440; %get current time (in minutes)
+                          obj.startSimTime = obj.timestepsMin(1);
+                      else
+                          obj.disableCallback()
+                          return
+                      end
+                    end
+                    
                     % Calculate when update should occur in real time
                     timeFromStart = obj.timestepsMin(obj.currentIndex+1) - obj.startSimTime;
                     realtimeToAdd = obj.startRealTime + timeFromStart - datenum(datetime)*1440;
