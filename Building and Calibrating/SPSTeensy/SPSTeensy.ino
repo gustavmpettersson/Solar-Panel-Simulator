@@ -143,10 +143,12 @@ void loop() {
       Serial2.print("\n");
     } else if (task.substring(0,1).equals("S")) { //Set ID
       int setID = task.substring(1).toInt();
-      if (setID > 0 && setID < 256) {
+      if (setID > 0 && setID < 255) {
         EEPROM.write(0,setID);
         DeviceID = setID;
         Serial2.println("ID set!");
+      } else {
+        Serial2.println("Forbidden number!");
       }
     } else if (task.substring(0,1).equals("D")) { //Set lookup table
       // This is where the fun begins, we are getting data!
